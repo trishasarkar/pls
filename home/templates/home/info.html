@@ -1,0 +1,214 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> jQuery Chat Application </title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap">
+    <link rel="stylesheet" href="{% static 'home/css/style.css' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <style>
+    body {
+      background-image: url('static/home/img/background.png');
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: cover;
+    }
+    </style>
+    <style media="screen">
+
+        *{
+        margin: 0;
+        padding: 0;
+    }
+    .rate {
+        float: left;
+        height: 46px;
+        padding: 0 10px;
+    }
+    .rate:not(:checked) > input {
+        position:absolute;
+        top:-9999px;
+    }
+    .rate:not(:checked) > label {
+        float:right;
+        width:1em;
+        overflow:hidden;
+        white-space:nowrap;
+        cursor:pointer;
+        font-size:30px;
+        color:#ccc;
+    }
+    .rate:not(:checked) > label:before {
+        content: '★ ';
+    }
+    .rate > input:checked ~ label {
+        color: #ffc700;
+    }
+    .rate:not(:checked) > label:hover,
+    .rate:not(:checked) > label:hover ~ label {
+        color: #deb217;
+    }
+    .rate > input:checked + label:hover,
+    .rate > input:checked + label:hover ~ label,
+    .rate > input:checked ~ label:hover,
+    .rate > input:checked ~ label:hover ~ label,
+    .rate > label:hover ~ input:checked ~ label {
+        color: #c59b08;
+    }
+
+    /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
+
+    </style>
+
+    <script>
+      var x = document.getElementById("loc");
+
+      function getLocation() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(showPosition);
+        } else {
+          x.value = "Geolocation is not supported by this browser.";
+        }
+      }
+
+      function showPosition(position) {
+        x.value = "Latitude: " + position.coords.latitude +
+        "<br>Longitude: " + position.coords.longitude;
+      }
+
+      window.onload = getLocation;
+
+    </script>
+
+</head>
+<body">
+    <div class="chat-app-wrapper">
+        <nav>
+            <div class="nav-left-section">
+                <span id="title">Preffered learning style determination</span>
+            </div>
+        </nav>
+
+        <div class="chat">
+          <br>
+
+
+          <br><br>
+            <div class="container">
+                <div class="msg-header">
+                    <div class="active">
+                        <h5>
+                          IBM
+                        </h5>
+                    </div>
+                </div>
+
+                <div class="chat-page">
+                    <div class="msg-inbox">
+                        <div class="chats" id="chats">
+                            <div class="msg-page" id="msg-page">
+                                <div class="loading-message-container" id="loading-message-container" style="display: none;">
+                                    <div class="spinner">
+                                            <svg width="100" height="100" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg" stroke="#003">
+                                                <g fill="none" fill-rule="evenodd">
+                                                  <g transform="translate(1 1)" stroke-width="2">
+                                                    <circle stroke-opacity=".5" cx="18" cy="18" r="18"></circle>
+                                                    <path d="M36 18c0-9.94-8.06-18-18-18">
+                                                      <animateTransform attributeName="transform" type="rotate" from="0 18 18" to="360 18 18" dur="1s" repeatCount="indefinite"></animateTransform>
+                                                    </path>
+                                                  </g>
+                                                </g>
+                                              </svg>
+                                    </div>
+                                </div>
+
+
+                                <div>
+                                    <div id="group-message-holder" style="">
+
+<!--  ############################################# -->
+
+
+<!--  ############################################# -->
+<br><br><br>
+<center>
+
+<div class="" style="width:60%;">
+  <h2>Personal Info </h2><br>
+
+  <p>Please enter these details before we continue</p>
+
+  <br><br>
+  <form class="" action="{% url 'home:quiz' %}" method="GET">
+    {% csrf_token %}
+    Name (optional): <input type="text" name="" value=""><br><br>
+    Age (between 14 and 26): <input type="number" min="14" max="26"><br><br>
+    Gender: <label for="sex"></label>
+
+    <select name="sex" id="sex">
+      <option value="Male">Male</option>
+      <option value="Female">Female</option>
+      <option value="Other">Other</option>
+    </select>
+    <br><br>
+    <input type="hidden" name="loc" value="" id='loc'>
+    <button type="submit" name="button" style="color:rgb(225,225,225); width:50%">Continue</button>
+  </form>
+
+
+</div>
+
+
+<!--  ############################################# -->
+
+                </div>
+                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="msg-bottom">
+                            <form class="message-form" id="message-form">
+                                <div class="input-group">
+                                    <input type="text" id="input-text" class="form-control message-input" placeholder="Type something" required="">
+                                    <div id="send-message-spinner" class="spinner" style="display: none;">
+                                            <svg width="30" height="30" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg" stroke="#003">
+                                                <g fill="none" fill-rule="evenodd">
+                                                  <g transform="translate(1 1)" stroke-width="2">
+                                                    <circle stroke-opacity=".5" cx="18" cy="18" r="18"></circle>
+                                                    <path d="M36 18c0-9.94-8.06-18-18-18">
+                                                      <animateTransform attributeName="transform" type="rotate" from="0 18 18" to="360 18 18" dur="1s" repeatCount="indefinite"></animateTransform>
+                                                    </path>
+                                                  </g>
+                                                </g>
+                                              </svg>
+                                    </div>
+                                    <input id="loggedInUID" type="hidden">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <br><br>
+
+            </div>
+        </div>
+    </div>
+
+
+
+<!-- Dummy scripts -->
+<!-- <script src="{% static 'home/js/chatService-dummy.js' %}"></script>
+<script src="{% static 'home/js/script-dummy.js' %}"></script> -->
+
+
+</body></html>

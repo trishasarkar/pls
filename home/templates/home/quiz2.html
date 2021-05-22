@@ -1,0 +1,366 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> jQuery Chat Application </title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap">
+    <link rel="stylesheet" href="{% static 'home/css/style.css' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <style>
+    body {
+      background-image: url('static/home/img/background.png');
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: cover;
+    }
+    </style>
+
+    <style media="screen">
+      div.sliders {
+      margin: 20px auto;
+      background-color: #000000;
+      width: 50%;
+      padding: 20px;
+      }
+      .slide-option {
+        display: flex;
+        flex-direction: row;
+      }
+      div.slider {
+      display: block;
+      width: 100%;
+      margin: 20px auto;
+      background-color: #ffffff;
+      height: 20px;
+      border: 1px solid rgb(200,200,200);
+      }
+
+      div.slide {
+      width: 33%;
+      height: 100%;
+      background: #1663AC;
+      position: relative;
+      }
+
+      div.control {
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      // padding: 40px;
+      background: #7C71A1;
+      position: absolute;
+      right: -7px;
+      top: 50%;
+      margin-top: -7px;
+      cursor: pointer;
+      }
+      .switch{
+      position:relative;
+      left:-100px;
+      }
+
+      .hidden{
+      display:none;
+      }
+    </style>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        slider = new Slider();
+      });
+
+      var Slider = (function() {
+
+        var Slider = function() {
+
+          this.initialise();
+        }
+
+        Slider.prototype = {
+
+          initialise: function() {
+            this.vars();
+            this.setup();
+            this.slideEvent();
+          },
+
+          vars: function() {
+            // vars
+            _this = this;
+            this.container = $('.sliders');
+            this.slider = $('.slider');
+            this.slide = $('.slide');
+            this.controls = $('.control');
+            this.value = $('.value');
+            this.value_in = $('.value_in');
+            this.totalPercentage = 100;
+          },
+
+          setup: function() {
+            // set equal width depending on how many sliders there are when initalised
+            var counter = 0;
+            this.slide.each(function() {
+              counter++;
+            });
+
+            var initWidth = Math.round(this.totalPercentage / counter);
+
+           this.slide.width(initWidth + '%');
+           this.slide.attr('data-percent', initWidth + '%');
+           this.value.text(initWidth + '%');
+           this.value_in.val(initWidth);
+          },
+
+          getPercentWidth: function(target) {
+            // get percentage of current width
+            target.attr('data-percent', (100 * parseInt(target.css('width')) / parseInt(target.parent().css('width'))));
+          },
+
+          slideEvent: function() {
+            // listen for mouse down on the controls
+            this.controls.on('mousedown', function(event) {
+              this.slideDrag(event);
+            }.bind(this));
+          },
+
+          slideDrag: function(event) {
+            event.preventDefault();
+
+            this.target = $(event.target);
+            this.prevMousePos = 0;
+
+            this.target.parent().addClass('active');
+            // listen mousemove and mouseup events on the document: only if the mousedown happend on one of the controls
+            $(document).on('mousemove', this.slideMove);
+            $(document).on('mouseup', this.slideEnd);
+          },
+
+          slideMove: function() {
+            _this.mousePos = event.pageX;
+            _this.amount = [];
+
+            // get info on widths, offsets and positions
+            var offset = _this.slider.offset().left;
+            var sliderWidth = _this.slider.width();
+            var posX = Math.min(Math.max(0, _this.mousePos - offset), sliderWidth);
+
+            // checks direction
+            if (_this.mousePos < _this.prevMousePos)  {
+              _this.direction = 'left';
+            } else {
+              _this.direction = 'right';
+            }
+
+            //console.log(_this.direction);
+
+            // update mouse position
+            _this.prevMousePos = _this.mousePos;
+
+            // set new width of the active slider
+            _this.target.parent().width(posX / sliderWidth * 100 + '%');
+            _this.calcPercent();
+
+          },
+
+          calcPercent: function() {
+            var totalWidth = 0;
+            var sliderLength = 0;
+            var leftoverAmount = 0;
+
+            // loop through each slide
+            _this.slide.each(function() {
+
+              sliderLength++;
+              _this.getPercentWidth($(this));
+
+              if ($(this).hasClass('active')) {
+                // set active percentage
+                _this.active = parseInt($(this).attr('data-percent')).toFixed(0);
+
+
+              } else {
+
+                // add non active widths into an array
+
+                _this.amount.push(parseInt($(this).attr('data-percent')).toFixed(0));
+              }
+
+             //totalWidth += parseFloat($(this).attr('data-percent'));
+
+            });
+
+            // find out the leftover amount
+            leftoverAmount = _this.totalPercentage - _this.active;
+            _this.nonActiveAmount = 0;
+            $.each(_this.amount, function() {
+
+             _this.nonActiveAmount += parseInt(this) ;
+            });
+
+            var x = leftoverAmount / 100;
+            var y = _this.nonActiveAmount / 100;
+            var z = _this.active;
+
+
+            _this.slide.each(function() {
+
+              if (!$(this).hasClass('active') || !$(this).hasClass('locked')) {
+                 console.log($(this));
+
+                var v = x * (parseInt($(this).attr('data-percent')) / y);
+                $(this).width(v + '%');
+                $(this).find('.value').text(Math.round(v) + '%');
+                $(this).find('.value_in').val(Math.round(v));
+
+              }
+            });
+
+          },
+
+          slideEnd: function() {
+            // kill the events on mouse up.
+            _this.target.parent().removeClass('active');
+            $(this).off('mousemove', slider.slideMove);
+            $(this).off('mouseup', slider.slideEnd);
+          },
+        }
+
+        return Slider;
+
+      }());
+
+    </script>
+
+</head>
+<body>
+    <div class="chat-app-wrapper">
+        <nav>
+            <div class="nav-left-section">
+                <span id="title">Preffered learning style determination</span>
+            </div><br>
+            <div class="" style="float:right;">
+              <form class="" action="{% url 'home:revisit' %}" method="GET">
+                {% csrf_token %}
+                <button type="submit" name="revisit" style="width:130%;height:1%;color:white;">Revisit Later?</button>
+              </form>
+
+            </div>
+        </nav>
+
+
+
+
+
+        <div class="chat">
+
+          <center>
+            <div class="" style="width:55%;">
+              <center>
+                <br>
+                <div class="progress" style="width:65%;border:0.5px solid rgb(200,200,200);">
+                  <div class="progress-bar progress-bar-success" role="progressbar" style="width:{{pa}}%">
+                    Answered {{pa}}%
+                  </div>
+                  <div class="progress-bar progress-bar-warning" role="progressbar" style="width:{{pu}}%">
+                    Unanswered {{pu}}%
+                  </div>
+                  <br>
+                </div>
+
+                <span style="color:rgb(0,0,0)">{{ progress }}% Complete</span>
+              </center><br>
+              <center>
+                <div class="progress" style="width:65%;border:0.5px solid rgb(200,200,200);">
+                  <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow={{ progress2 }} aria-valuemin="0" aria-valuemax="100" style="width:{{ progress2 }}%;">
+
+                  </div>
+                </div>
+                <span style="color:rgb(0,0,0)">{{ progress2 }}% Complete</span>
+              </center>
+            </div>
+          </center>
+
+
+          <br>
+            <div class="container">
+                <div class="msg-header">
+                    <div class="active">
+                        <h5>
+                          Q{{q}}
+                        </h5>
+                    </div>
+                </div>
+
+                <div class="chat-page">
+                    <div class="msg-inbox">
+                        <div class="chats" id="chats">
+                            <div class="msg-page" id="msg-page">
+                                <div class="loading-message-container" id="loading-message-container" style="display: none;">
+                                    <div class="spinner">
+                                            <svg width="100" height="100" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg" stroke="#003">
+                                                <g fill="none" fill-rule="evenodd">
+                                                  <g transform="translate(1 1)" stroke-width="2">
+                                                    <circle stroke-opacity=".5" cx="18" cy="18" r="18"></circle>
+                                                    <path d="M36 18c0-9.94-8.06-18-18-18">
+                                                      <animateTransform attributeName="transform" type="rotate" from="0 18 18" to="360 18 18" dur="1s" repeatCount="indefinite"></animateTransform>
+                                                    </path>
+                                                  </g>
+                                                </g>
+                                              </svg>
+                                    </div>
+                                </div>
+
+
+                                <div>
+                                    <div id="group-message-holder" style="">
+
+<!--  ############################################# -->
+
+
+<!--  ############################################# -->
+                            <div class="w3-container" style='width:60%; float:center;'>
+                              <form class="" action="{% url 'home:quiz2' %}" method="POST">
+                                {% csrf_token %}
+                                  {{ content }}
+                              </form>
+                            </div>
+
+                            <form class="" action="{% url 'home:quiz2' %}" method="POST">
+                              {% csrf_token %}
+                                {{ exit }}
+                            </form>
+
+<!--  ############################################# -->
+
+                </div>
+                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <br><br>
+
+            </div>
+        </div>
+    </div>
+
+
+
+<!-- Dummy scripts -->
+<!-- <script src="{% static 'home/js/chatService-dummy.js' %}"></script>
+<script src="{% static 'home/js/script-dummy.js' %}"></script> -->
+
+
+</body></html>
