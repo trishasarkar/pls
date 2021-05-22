@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'home.apps.HomeConfig',
-     'django_admin_json_editor',
 ]
 
 MIDDLEWARE = [
