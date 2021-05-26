@@ -3,6 +3,7 @@ from django.utils.safestring import mark_safe
 from ibmcloudant.cloudant_v1 import CloudantV1, Document
 from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 import random, string
+import requests
 
 def choose_category():
     value = '''
@@ -25,11 +26,11 @@ def choose_category():
     Please select the category to continue <br><br>
 
     <input type="checkbox" name="1" value="1" id='1'>
-    <label style="color:rgb(100,100,100);font-weight:normal;" for="1">Getting furniture</label><br>
+    <label style="color:rgb(100,100,100);font-weight:normal;" for="1">Outdoor Classroom Experience</label><br>
     <input type="checkbox" name="2" value="2">
-    <label style="color:rgb(100,100,100);font-weight:normal;" for="2">Preparing an exam with a friend</label><br>
+    <label style="color:rgb(100,100,100);font-weight:normal;" for="2">Under Lockdown</label><br>
     <input type="checkbox" name="3" value="3">
-    <label style="color:rgb(100,100,100);font-weight:normal;" for="3">School Excursion</label><br><br>
+    <label style="color:rgb(100,100,100);font-weight:normal;" for="3">Rockclimbing</label><br><br>
 
     <button style="color:rgb(225,225,225);font-weight:normal;" class="login-btn" type="submit">Next</button>
     </p>
@@ -39,22 +40,27 @@ def choose_category():
     return value
 def get_data():
 
-    CLOUDANT_USERNAME="apikey-v2-1mfs4kqo2nmnc2sdtgp9ji8myznbgm6mivk0o93pfopt"
-    CLOUDANT_PASSWORD="f70c9a73c52d287d3271ddc3dba6a30a"
+    # CLOUDANT_USERNAME="apikey-v2-1mfs4kqo2nmnc2sdtgp9ji8myznbgm6mivk0o93pfopt"
+    # CLOUDANT_PASSWORD="f70c9a73c52d287d3271ddc3dba6a30a"
+    #
+    # authenticator = IAMAuthenticator("C8J8TcTL_T9YlMtyA6itWueAqAdkgGXbwOc8RA2omfCd")
+    # service = CloudantV1(authenticator=authenticator)
+    # service.set_service_url("https://apikey-v2-1mfs4kqo2nmnc2sdtgp9ji8myznbgm6mivk0o93pfopt:f70c9a73c52d287d3271ddc3dba6a30a@dc1a5ff5-996b-475c-8b7e-da87f4bf33a3-bluemix.cloudantnosqldb.appdomain.cloud")
+    # response = service.get_server_information().get_result()
+    #
+    # response = service.get_document(db='qdata', doc_id='001').get_result()
 
-    authenticator = IAMAuthenticator("C8J8TcTL_T9YlMtyA6itWueAqAdkgGXbwOc8RA2omfCd")
-    service = CloudantV1(authenticator=authenticator)
-    service.set_service_url("https://apikey-v2-1mfs4kqo2nmnc2sdtgp9ji8myznbgm6mivk0o93pfopt:f70c9a73c52d287d3271ddc3dba6a30a@dc1a5ff5-996b-475c-8b7e-da87f4bf33a3-bluemix.cloudantnosqldb.appdomain.cloud")
-    response = service.get_server_information().get_result()
+    url = "https://api.npoint.io/c4b4edd3640ed8357987"
 
-    response = service.get_document(db='qdata', doc_id='001').get_result()
+    r = requests.get(url)
+    data = r.json()
 
-    return response['data']
+    return data #response['data']
 def get_scene():
     scene = {
-    '1':'Getting Furniture',
-    '2':'Preparing for an exam with your friend',
-    '3':'School/College Excursion'
+    '1':'Outdoor Classroom Experience',
+    '2':'Under Lockdown',
+    '3':'Rockclimbing'
     }
     return scene
 
