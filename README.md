@@ -12,3 +12,4 @@
 8. quiz2 is the main loader for the quiz part. all questions and options are displayed from this view.
 9. by default this view stores the responses of previous question AND gets the session info of scenario.no and question.no and shows the next scenario/questions
 10. if there is some 'action' (jump section/exit), then it takes actions accordingly
+11.
