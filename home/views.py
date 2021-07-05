@@ -25,12 +25,15 @@ def choose_category():
     <span id="message-sender-id">PLS bot</span><br>
     Please select the category to continue <br><br>
 
-    <input type="checkbox" name="1" value="1" id='1'>
-    <label style="color:rgb(100,100,100);font-weight:normal;" for="1">Outdoor Classroom Experience</label><br>
-    <input type="checkbox" name="2" value="2">
-    <label style="color:rgb(100,100,100);font-weight:normal;" for="2">Under Lockdown</label><br>
-    <input type="checkbox" name="3" value="3">
-    <label style="color:rgb(100,100,100);font-weight:normal;" for="3">Rockclimbing</label><br><br>
+     <input type="checkbox" name="1" value="1" id='1' style="position: absolute;">
+    <label style="color:rgb(100,100,100);font-weight:normal; padding-left:1.4em;
+    display:inline-block;" for="1">Outdoor Classroom Experience</label><br>
+    <input type="checkbox" name="2" value="2"  style="position: absolute;">
+    <label style="color:rgb(100,100,100);font-weight:normal; padding-left:1.4em;
+    display:inline-block;" for="2">Under Lockdown</label><br>
+    <input type="checkbox" name="3" value="3"  style="position: absolute;">
+    <label style="color:rgb(100,100,100);font-weight:normal;padding-left:1.4em;
+    display:inline-block;" for="3">Rockclimbing</label><br><br>
 
     <button style="color:rgb(225,225,225);font-weight:normal;" class="login-btn" type="submit">Next</button>
     </p>
