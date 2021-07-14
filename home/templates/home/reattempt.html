@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title> jQuery Chat Application </title>
+    <title>  Preferred Learning Style Determination</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface&amp;display=swap">
@@ -16,14 +16,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
-    <style>
-    body {
-      background-image: url('static/home/img/background.png');
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-      background-size: cover;
-    }
-    </style>
     <style media="screen">
       div.sliders {
       margin: 20px auto;
@@ -72,182 +64,112 @@
       display:none;
       }
     </style>
-    <script type="text/javascript">
-      $(document).ready(function() {
-        slider = new Slider();
-      });
+    <script>
 
-      var Slider = (function() {
-
-        var Slider = function() {
-
-          this.initialise();
+   function updateTextInput1(val) {
+          document.getElementById('percent1').innerHTML=val; 
         }
+    function updateTextInput2(val) {
+          document.getElementById('percent2').innerHTML=val; 
+        }
+    function updateTextInput3(val) {
+          document.getElementById('percent3').innerHTML=val; 
+        }
+    $(document).ready(function() {
+      
+      
+      //console.log(slider1,slider2,slider3)  
 
-        Slider.prototype = {
+    var max_total = 100;
+    
+    // slider1-slider2 pair
+     $("#slider1").on("change", function(){
 
-          initialise: function() {
-            this.vars();
-            this.setup();
-            this.slideEvent();
-          },
+            var slider1 = document.getElementById('slider1').value;
+            var slider3 = document.getElementById('slider3').value;
+            slider1 = Math.min(slider1,max_total-slider3);  //max possible slider value
+            if (slider1<max_total-slider3){   
+              // slider2 != 0
+              var slider2 = max_total - slider1 - slider3;
 
-          vars: function() {
-            // vars
-            _this = this;
-            this.container = $('.sliders');
-            this.slider = $('.slider');
-            this.slide = $('.slide');
-            this.controls = $('.control');
-            this.value = $('.value');
-            this.value_in = $('.value_in');
-            this.totalPercentage = 100;
-          },
-
-          setup: function() {
-            // set equal width depending on how many sliders there are when initalised
-            var counter = 0;
-            this.slide.each(function() {
-              counter++;
-            });
-
-            var initWidth = Math.round(this.totalPercentage / counter);
-
-           this.slide.width(initWidth + '%');
-           this.slide.attr('data-percent', initWidth + '%');
-           this.value.text(initWidth + '%');
-           this.value_in.val(initWidth);
-          },
-
-          getPercentWidth: function(target) {
-            // get percentage of current width
-            target.attr('data-percent', (100 * parseInt(target.css('width')) / parseInt(target.parent().css('width'))));
-          },
-
-          slideEvent: function() {
-            // listen for mouse down on the controls
-            this.controls.on('mousedown', function(event) {
-              this.slideDrag(event);
-            }.bind(this));
-          },
-
-          slideDrag: function(event) {
-            event.preventDefault();
-
-            this.target = $(event.target);
-            this.prevMousePos = 0;
-
-            this.target.parent().addClass('active');
-            // listen mousemove and mouseup events on the document: only if the mousedown happend on one of the controls
-            $(document).on('mousemove', this.slideMove);
-            $(document).on('mouseup', this.slideEnd);
-          },
-
-          slideMove: function() {
-            _this.mousePos = event.pageX;
-            _this.amount = [];
-
-            // get info on widths, offsets and positions
-            var offset = _this.slider.offset().left;
-            var sliderWidth = _this.slider.width();
-            var posX = Math.min(Math.max(0, _this.mousePos - offset), sliderWidth);
-
-            // checks direction
-            if (_this.mousePos < _this.prevMousePos)  {
-              _this.direction = 'left';
-            } else {
-              _this.direction = 'right';
             }
 
-            //console.log(_this.direction);
+            else{
+              var slider2 = 0;
+            }
 
-            // update mouse position
-            _this.prevMousePos = _this.mousePos;
+            $("#slider1").prop("value", slider1);
+            document.getElementById('percent1').innerHTML = slider1;
+            $("#slider2").prop("value", slider2);
+            document.getElementById('percent2').innerHTML = slider2;
+            
+        });
 
-            // set new width of the active slider
-            _this.target.parent().width(posX / sliderWidth * 100 + '%');
-            _this.calcPercent();
+        // slider2-slider3 pair
+      $("#slider2").on("change", function(){
+            
+            var slider1 = document.getElementById('slider1').value;
+            var slider2 = document.getElementById('slider2').value;
+            slider2 = Math.min(slider2,max_total-slider1);  //max possible slider value
+            if (slider2<max_total-slider1){   
+              // slider3 != 0
+              var slider3 = max_total - slider1 - slider2;
+            }
 
-          },
+            else{
+              var slider3 = 0;
+              
+            }
 
-          calcPercent: function() {
-            var totalWidth = 0;
-            var sliderLength = 0;
-            var leftoverAmount = 0;
+            $("#slider2").prop("value", slider2);
+            document.getElementById('percent2').innerHTML =  slider2;
+            $("#slider3").prop("value", slider3);
+            document.getElementById('percent3').innerHTML =  slider3;
+            
+        });
+        //slider3-slider1 pair
+       $("#slider3").on("change", function(){
+            
+            var slider2 = document.getElementById('slider2').value;
+            var slider3 = document.getElementById('slider3').value;
+            slider3 = Math.min(slider3,max_total-slider2);  //max possible slider value
+            if (slider3<max_total-slider2){   
+              // slider1 != 0
+              var slider1 = max_total - slider3 - slider2;
+            }
 
-            // loop through each slide
-            _this.slide.each(function() {
+            else{
+              var slider1 = 0;
+            }
 
-              sliderLength++;
-              _this.getPercentWidth($(this));
-
-              if ($(this).hasClass('active')) {
-                // set active percentage
-                _this.active = parseInt($(this).attr('data-percent')).toFixed(0);
-
-
-              } else {
-
-                // add non active widths into an array
-
-                _this.amount.push(parseInt($(this).attr('data-percent')).toFixed(0));
-              }
-
-             //totalWidth += parseFloat($(this).attr('data-percent'));
-
-            });
-
-            // find out the leftover amount
-            leftoverAmount = _this.totalPercentage - _this.active;
-            _this.nonActiveAmount = 0;
-            $.each(_this.amount, function() {
-
-             _this.nonActiveAmount += parseInt(this) ;
-            });
-
-            var x = leftoverAmount / 100;
-            var y = _this.nonActiveAmount / 100;
-            var z = _this.active;
-
-
-            _this.slide.each(function() {
-
-              if (!$(this).hasClass('active') || !$(this).hasClass('locked')) {
-                 console.log($(this));
-
-                var v = x * (parseInt($(this).attr('data-percent')) / y);
-                $(this).width(v + '%');
-                $(this).find('.value').text(Math.round(v) + '%');
-                $(this).find('.value_in').val(Math.round(v));
-
-              }
-            });
-
-          },
-
-          slideEnd: function() {
-            // kill the events on mouse up.
-            _this.target.parent().removeClass('active');
-            $(this).off('mousemove', slider.slideMove);
-            $(this).off('mouseup', slider.slideEnd);
-          },
-        }
-
-        return Slider;
-
-      }());
-
+            $("#slider3").prop("value", slider3);
+            document.getElementById('percent3').innerHTML =  slider3;
+            $("#slider1").prop("value", slider1);
+            document.getElementById('percent1').innerHTML = slider1;
+        });
+    });
+    
     </script>
-
 </head>
 <body>
     <div class="chat-app-wrapper">
+        <div>
+          <div style="background-color: #525151; top:0;left:0;width:100%; position:relative;height:15px;"></div>
+        </div>
+        <br><br>
+
         <nav>
             <div class="nav-left-section">
-                <span id="title">Preffered learning style determination</span>
+                <span id="title"> <img src="static/home/img/ibm-logo.png" width=150px></img> </span>
+                <span class="nav-right-section" style="float:right;display:inline-block">
+                  <form class="" action="{% url 'home:revisit' %}" method="GET">
+                    {% csrf_token %}
+                    <button type="submit" name="revisit" style="width:130%;height:1%;color:white;">Revisit Later?</button>
+                  </form>
+               </span>
             </div>
+            
         </nav>
-
         <div class="chat">
           <br>
 
@@ -263,11 +185,21 @@
           <br><br>
             <div class="container">
                 <div class="msg-header">
+                  <span>
                     <div class="active">
-                        <h5>
-                          Q{{q}}
+                        <h5 style = "white-space: nowrap; font-weight: bold;">
+                           Q{{q}}
                         </h5>
                     </div>
+                  </span>
+                  <span class="tab">
+                  <span style="align-items:right;">
+                    <div>
+                      <span class="circles" style="background-color: #4BAF7F;" ></span>        
+                      <span class="circles" style="background-color: #F1D46E;" ></span>
+                      <span class="circles" style="background-color: #FF0000;" ></span>
+                    </div>
+                  </span>
                 </div>
 
                 <div class="chat-page">
@@ -297,7 +229,7 @@
 
 
 <!--  ############################################# -->
-                            <div class="w3-container" style='width:60%; float:center;'>
+                            <div class="w3-container" style='width:80%; float:center;'>
                               <form class="" action="{% url 'home:reattempt' %}" method="POST">
                                 {% csrf_token %}
                                   {{ content }}
@@ -308,6 +240,8 @@
                               {% csrf_token %}
                                 {{ exit }}
                             </form>
+
+                             <br><br><br><br>
 
 <!--  ############################################# -->
 
@@ -320,17 +254,20 @@
 
                     </div>
                 </div>
-                <br><br>
+              <br><br><br><br>
 
             </div>
         </div>
+      
+        <footer style="background-color:#525151; top:0; left:0;width:100%; position:relative; height:80px;">
+          <div style="padding-top:18px; text-align:center; line-height: 25px;">
+            <div style="color:white;">Need help? Contact us at placeholder@in.ibm.com</div>
+            <div style="color:white;"> <i class="fas fa-copyright"></i> All rights reserved. IBM India Private Limited.</div>
+          </div>
+
+        </footer>
     </div>
 
-
-
-<!-- Dummy scripts -->
-<!-- <script src="{% static 'home/js/chatService-dummy.js' %}"></script>
-<script src="{% static 'home/js/script-dummy.js' %}"></script> -->
 
 
 </body></html>

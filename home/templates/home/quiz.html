@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title> jQuery Chat Application </title>
+    <title>  Preferred Learning Style Determination </title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface&amp;display=swap">
@@ -14,24 +14,21 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
-    <style>
-    body {
-      background-image: url('static/home/img/background.png');
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-      background-size: cover;
-    }
-    </style>
+    
 </head>
 <body>
     <div class="chat-app-wrapper">
+        <div>
+          <div style="background-color: #525151; top:0;left:0;width:100%; position:relative;height:15px;"></div>
+        </div>
+        <br><br>
+
         <nav>
             <div class="nav-left-section">
-                <span id="title">Preffered learning style determination</span>
+                <span id="title"> <img src="static/home/img/ibm-logo.png" width=150px></img> </span>
+                
             </div>
         </nav>
-
         <div class="chat">
           <br>
 
@@ -39,11 +36,21 @@
           <br><br>
             <div class="container">
                 <div class="msg-header">
+                    <span>
                     <div class="active">
-                        <h5>
+                        <h5 style = "white-space: nowrap; font-weight: bold;">
                           {{q}}
                         </h5>
                     </div>
+                  </span>
+                  <span class="tab">
+                  <span style="align-items:right;">
+                    <div>
+                      <span class="circles" style="background-color: #4BAF7F;" ></span>        
+                      <span class="circles" style="background-color: #F1D46E;" ></span>
+                      <span class="circles" style="background-color: #FF0000;" ></span>
+                    </div>
+                  </span>
                 </div>
 
                 <div class="chat-page">
@@ -86,39 +93,20 @@
                             </div>
                         </div>
 
-                        <div class="msg-bottom">
-                            <form class="message-form" id="message-form">
-                                <div class="input-group">
-                                    <input type="text" id="input-text" class="form-control message-input" placeholder="Type something" required="">
-                                    <div id="send-message-spinner" class="spinner" style="display: none;">
-                                            <svg width="30" height="30" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg" stroke="#003">
-                                                <g fill="none" fill-rule="evenodd">
-                                                  <g transform="translate(1 1)" stroke-width="2">
-                                                    <circle stroke-opacity=".5" cx="18" cy="18" r="18"></circle>
-                                                    <path d="M36 18c0-9.94-8.06-18-18-18">
-                                                      <animateTransform attributeName="transform" type="rotate" from="0 18 18" to="360 18 18" dur="1s" repeatCount="indefinite"></animateTransform>
-                                                    </path>
-                                                  </g>
-                                                </g>
-                                              </svg>
-                                    </div>
-                                    <input id="loggedInUID" type="hidden">
-                                </div>
-                            </form>
-                        </div>
                     </div>
                 </div>
-                <br><br>
+                <br><br><br><br>
 
             </div>
         </div>
+        <footer style="background-color:#525151; top:0; left:0;width:100%; position:relative; height:80px;">
+          <div style="padding-top:18px; text-align:center; line-height: 25px;">
+            <div style="color:white;">Need help? Contact us at placeholder@in.ibm.com</div>
+            <div style="color:white;"> <i class="fas fa-copyright"></i> All rights reserved. IBM India Private Limited.</div>
+          </div>
+
+        </footer>
     </div>
-
-
-
-<!-- Dummy scripts -->
-<!-- <script src="{% static 'home/js/chatService-dummy.js' %}"></script>
-<script src="{% static 'home/js/script-dummy.js' %}"></script> -->
 
 
 </body></html>

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title> jQuery Chat Application </title>
+    <title>  Preferred Learning Style Determination</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface&amp;display=swap">
@@ -15,14 +15,14 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <style>
+    <!-- <style>
     body {
-      background-image: url('static/home/img/background.png');
+      /* background-image: url('static/home/img/background.png'); */
       background-repeat: no-repeat;
       background-attachment: fixed;
       background-size: cover;
     }
-    </style>
+    </style> -->
     <style media="screen">
 
       *{
@@ -72,24 +72,40 @@
 </head>
 <body>
     <div class="chat-app-wrapper">
+        <div>
+          <div style="background-color: #525151; top:0;left:0;width:100%; position:relative;height:15px;"></div>
+        </div>
+        <br><br>
+
         <nav>
             <div class="nav-left-section">
-                <span id="title">Preffered learning style determination</span>
+                <span id="title"> <img src="static/home/img/ibm-logo.png" width=150px></img> </span>
+                
             </div>
         </nav>
-
         <div class="chat">
           <br>
 
           <br><br>
             <div class="container">
                 <div class="msg-header">
+                    <span>
                     <div class="active">
-                        <h5>
+                        <h5 style = "white-space: nowrap; font-weight: bold;">
                           Results!
                         </h5>
                     </div>
+                  </span>
+                  <span class="tab">
+                  <span style="align-items:right;">
+                    <div>
+                      <span class="circles" style="background-color: #4BAF7F;" ></span>        
+                      <span class="circles" style="background-color: #F1D46E;" ></span>
+                      <span class="circles" style="background-color: #FF0000;" ></span>
+                    </div>
+                  </span>
                 </div>
+
 
                 <div class="chat-page">
                     <div class="msg-inbox">
@@ -119,46 +135,68 @@
 
 <!--  ############################################# -->
 <br><br><br>
-</div>
 <center>
 
 <div class="" style="width:60%;">
 
-<center>
-  <form class="" action="" method="POST">
+  <form class="" action="{% url 'home:preresults' %}" method="POST">
     {% csrf_token %}
 
-    <h2>Please give you feedback here!</h2>
-    <br>
-    <center>
-      <div class="rate" >
-        <input type="radio" id="star5" name="rate" value="5" />
-        <label for="star5" title="text">5 stars</label>
-        <input type="radio" id="star4" name="rate" value="4" />
-        <label for="star4" title="text">4 stars</label>
-        <input type="radio" id="star3" name="rate" value="3" />
-        <label for="star3" title="text">3 stars</label>
-        <input type="radio" id="star2" name="rate" value="2" />
-        <label for="star2" title="text">2 stars</label>
-        <input type="radio" id="star1" name="rate" value="1" />
-        <label for="star1" title="text">1 star</label>
-      </div>
-    </center>
-
-
-  <br><br><br>
-    Suggest a question: <input type="text" name="text"> <br><br>
-    <button style="color:rgb(225,225,225)" class="login-btn" type="submit">Submit</button>
-
-    <br><br>
-  </div>
+    {{ code }}
   </form>
 
-</center>
+  <form class="" action="{% url 'home:resultsPage' %}" method="POST">
+    {% csrf_token %}
+
+    {{ continue }}
+  </form>
+
+
+</div>
+
 
 <!--  ############################################# -->
 
-                </div></center>
+                </div>
+                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {% comment %} <div class="msg-bottom">
+                            <form class="message-form" id="message-form">
+                                <div class="input-group">
+                                    <input type="text" id="input-text" class="form-control message-input" placeholder="Type something" required="">
+                                    <div id="send-message-spinner" class="spinner" style="display: none;">
+                                            <svg width="30" height="30" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg" stroke="#003">
+                                                <g fill="none" fill-rule="evenodd">
+                                                  <g transform="translate(1 1)" stroke-width="2">
+                                                    <circle stroke-opacity=".5" cx="18" cy="18" r="18"></circle>
+                                                    <path d="M36 18c0-9.94-8.06-18-18-18">
+                                                      <animateTransform attributeName="transform" type="rotate" from="0 18 18" to="360 18 18" dur="1s" repeatCount="indefinite"></animateTransform>
+                                                    </path>
+                                                  </g>
+                                                </g>
+                                              </svg>
+                                    </div>
+                                    <input id="loggedInUID" type="hidden">
+                                </div>
+                            </form>
+                        </div> {% endcomment %}
+                    </div>
+                </div>
+                <br><br><br><br>
+
+            </div>
+        </div>
+        <footer style="background-color:#525151; top:0; left:0;width:100%; position:relative; height:80px;">
+          <div style="padding-top:18px; text-align:center; line-height: 25px;">
+            <div style="color:white;">Need help? Contact us at placeholder@in.ibm.com</div>
+            <div style="color:white;"> <i class="fas fa-copyright"></i> All rights reserved. IBM India Private Limited.</div>
+          </div>
+
+        </footer>
+    </div>
 
 
 
