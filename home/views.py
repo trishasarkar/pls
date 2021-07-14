@@ -634,7 +634,7 @@ def preresults(request):
         code = '<br><br><br>'
 
         for i in tp:
-            code = code + 'You have not answered ' + str(uns_p[str(i)]) + '% of section ' + str(str(i)) + '. Revisit? <input type="submit" class="login-btn"  name="act" style="color:#ffffff; width:50%; background: #88B2F0" value="Complete Section '+str(str(i))+'"> <br><br>'
+            code = code + 'You have not answered ' + str(uns_p[str(i)]) + '% of section ' + str(str(i)) + '. Revisit Section? <input type="submit" class="login-btn"  name="act" style="color:#ffffff; width:50%; background: #88B2F0" value="'+str(str(i))+'"> <br><br>'
         code = code + '<br><br>'
 
         cont = ''' Proceed to view results? <br> <input type="submit" style="color:#ffffff; width:50%; background: #88B2F0" class="login-btn" name="continue" value="View Results"> '''
