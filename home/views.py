@@ -8,24 +8,24 @@ import requests
 def choose_category():
     value = '''
 
-    <div class="received-chats old-chats"><div class="received-chats-img"><img src="https://data.cometchat.com/assets/images/avatars/captainamerica.png" alt="Avatar" class="avatar"></div>
+    <div class="received-chats old-chats"><div class="received-chats-img"><img src='static/home/img/avatar.png' alt="Avatar" class="avatar"></div>
     <div class="received-msg"><div class="received-msg-inbox">
 
     <p>
-    <span id="message-sender-id">PLS bot</span><br>
+    <span id="message-sender-id">Learning Specialist</span><br>
     Welcome to IBM's PLS bot.
     </p>
 
     </div></div></div>
 
-    <div class="received-chats old-chats"><div class="received-chats-img"><img src="https://data.cometchat.com/assets/images/avatars/captainamerica.png" alt="Avatar" class="avatar"></div>
+    <div class="received-chats old-chats"><div class="received-chats-img"><img src='static/home/img/avatar.png' alt="Avatar" class="avatar"></div>
     <div class="received-msg"><div class="received-msg-inbox">
 
     <p>
-    <span id="message-sender-id">PLS bot</span><br>
+    <span id="message-sender-id">Learning Specialist</span><br>
     Please select the category to continue <br><br>
 
-     <input type="checkbox" name="1" value="1" id='1' style="position: absolute;">
+    <input type="checkbox" name="1" value="1" id='1' style="position: absolute;">
     <label style="color:rgb(100,100,100);font-weight:normal; padding-left:1.4em;
     display:inline-block;" for="1">Outdoor Classroom Experience</label><br>
     <input type="checkbox" name="2" value="2"  style="position: absolute;">
@@ -34,8 +34,22 @@ def choose_category():
     <input type="checkbox" name="3" value="3"  style="position: absolute;">
     <label style="color:rgb(100,100,100);font-weight:normal;padding-left:1.4em;
     display:inline-block;" for="3">Rockclimbing</label><br><br>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#chckbx').click(function() {
+            checked = $("input[type=checkbox]:checked").length;
 
-    <button style="color:rgb(225,225,225);font-weight:normal;" class="login-btn" type="submit">Next</button>
+            if(!checked) {
+                alert("You must choose atleast one scenario.");
+                return false;
+            }
+
+            });
+        });
+
+    </script>
+    
+    <button style="color:#ffffff; background: #88B2F0;font-weight:normal;" class="login-btn" type="submit" id="chckbx">Next</button>
     </p>
     </div></div></div>
 
@@ -154,18 +168,22 @@ def resultsPage(request):
     code = '<br><br><br>'
 
     for i in tp:
-        code = code + 'you have not answered ' + str(uns_p[str(i)]) + '% of section ' + str(str(i)) + '. Revisit? <input type="submit" name="action" value="'+str(str(i))+'"> <br>'
+        code = code + 'you have not answered ' + str(uns_p[str(i)]) + '% of section ' + str(str(i)) + '. Revisit? <input type="s0ubmit" class="login-btn" name="action" value="'+str(str(i))+'"> <br>'
     code = code + '<br><br>'
 
     return render(request, 'home/results.html', {'V':int(res[0]), 'A':int(res[1]), 'K':int(res[2]), 'code':mark_safe(code)})
 
 # Create your views here.
+
+
 def quiz(request):
 
     if request.method == 'POST':
         results = list(request.POST.keys())
+        # scenarios picked
         results = results[1:]
         n_s = len(results)
+        # print(results)
         request.session['results'] = results
         request.session['s'] = 0
         q_data = get_data()
@@ -180,7 +198,8 @@ def quiz(request):
         request.session['c'] = 0
         code = choose_category()
 
-    return render(request, 'home/quiz.html', {'content': mark_safe(code), 'progress':progress, 'q':'PLS bot'})
+    return render(request, 'home/quiz.html', {'content': mark_safe(code), 'progress':progress, 'q':'Discover your learning style'})
+
 
 def quiz2(request):
     try:
@@ -206,11 +225,14 @@ def quiz2(request):
     c = request.session['c']
     responses = list(request.session['responses'])
     results = list(request.session['results'])
+    # print(responses,results,s,c)
 
     try:
-
+        # print(request.POST.values())
         answers = list(request.POST.values())
         answers = answers[1:]
+
+        print(answers) 
 
         if len(answers) != 1:
             answers = [int(float(i)) for i in answers]
@@ -273,56 +295,53 @@ def quiz2(request):
                     <p>
                     <br>''' + q_data[str(int(c))]['q'] + '''
                     <br><br>
-                    1. ''' + q_data[str(int(c))]['V'] + '''<br>
-
-                    <div class="slider one slide-option">
-                      <div class="slide">
-                        <div class="control">
-                          <div class="switch">
-                              <input type="number" class="value_in hidden" value="0" name="charity_one" min="0" max="100">
-                          </div>
-                          </div>
-                      </div>
-                      <br>
-
-                    2. ''' + q_data[str(int(c))]['A'] + '''<br>
-
-                    <div class="slider two">
-                      <div class="slide">
-                         <div class="control">
-                           <div class="switch">
-                              <input type="number" class="value_in hidden" value="0" name="charity_two" min="0" max="100">
-                          </div>
-                          </div>
-                      </div>
-                      <br>
-
-                    3. ''' + q_data[str(int(c))]['K'] + '''<br>
-
-                    <div class="slider four">
-                    <div class="slide">
-                        <div class="control">
-                        <div class="switch">
-                            <input type="number" class="value_in hidden" value="0" name="charity_four" min="0" max="100">
+                    1. ''' + q_data[str(int(c))]['V'] + ''':<br><br>
+                         <div class="form-group row">
+                            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                <input type="range"  class="form-control-range" id="slider1" name="rangeInput1" min="0" max="100" value=33.33
+                                onchange="updateTextInput1(this.value);">
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                             <span  id="percent1">33</span>%
+                            </div>
                         </div>
-                    </div>
-                    </div></div>
+                        
+
+                      <br>
+                    2. ''' + q_data[str(int(c))]['A'] + ''':<br><br>
+                        <div class="form-group row">
+                            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                <input type="range"  class="form-control-range" id="slider2" name="rangeInput2" min="0" max="100" value=33.33
+                                onchange="updateTextInput2(this.value);" style="width:100%">
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                             <span  id="percent2">33</span>%
+                            </div>
+                        </div>
+                    3. ''' + q_data[str(int(c))]['K'] + ''':<br><br>
+                        <div class="form-group row">
+                            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                <input type="range"  class="form-control-range"  id="slider3" name="rangeInput3" min="0" max="100" value=33.33
+                                onchange="updateTextInput3(this.value);">
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                             <span  id="percent3">33</span>%
+                            </div>
+                        </div>
+
                     <br>
-
-
-                    <input type="submit" value="Submit">
+                    <input type="submit" value="Submit"  style="color:#ffffff; width:40%;  background: #88B2F0; display: inline-block;">
                     </div>
 
-
-                    <br>
                     </p>
                     </div></div></div>
+                    
                     '''
 
         if float(c/n) > 0.5:
-            exit = ''' <br><br><br><br><br><br><br><br><br><br><br><br>
-              <input type="submit" name="action" value="jump">
-              <input type="submit" name="action" value="exit"> '''
+            exit = '''
+              <input type="submit" name="action" value="jump"  style="color:#ffffff; margin-left: 10px; width:20%; background: #88B2F0; display: inline-block;">
+              <input type="submit" name="action" value="exit"  style="color:#ffffff; width:20%; background: #88B2F0; display: inline-block;"> '''
         else:
             exit = ''
 
@@ -330,7 +349,6 @@ def quiz2(request):
 
         return render(request, 'home/quiz2.html', {'content': mark_safe(code), 'progress':progress, 'progress2':progress2, 'q':int(c), 'exit': mark_safe(exit), 'pa':pa, 'pu':pu})
     return HttpResponse('404!')
-
 def feedback(request):
     return render(request, 'home/feedback.html')
 
@@ -352,6 +370,7 @@ def reattempt(request):
     try:
         if request.POST['action']:
             if request.POST['action'] == 'jump':
+                
                 code =  ''
                 request.session['s'] += 1
                 request.session['c'] = 1
@@ -414,56 +433,53 @@ def reattempt(request):
                 <p>
                 <br>''' + q + '''
                 <br><br>
-                1. ''' + V + '''<br>
+                1. ''' + V + ''':<br><br>
+                         <div class="form-group row">
+                            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                <input type="range"  class="form-control-range" id="slider1" name="rangeInput1" min="0" max="100" value=33.33
+                                onchange="updateTextInput1(this.value);">
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                             <span  id="percent1">33</span>%
+                            </div>
+                        </div>
+                        
 
-                <div class="slider one slide-option">
-                  <div class="slide">
-                    <div class="control">
-                      <div class="switch">
-                          <input type="number" class="value_in hidden" value="0" name="charity_one" min="0" max="100">
-                      </div>
-                      </div>
-                  </div>
-                  <br>
+                      <br>
 
-                2. ''' + A + '''<br>
+                2. ''' + A + ''':<br><br>
+                        <div class="form-group row">
+                            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                <input type="range"  class="form-control-range" id="slider2" name="rangeInput2" min="0" max="100" value=33.33
+                                onchange="updateTextInput2(this.value);" style="width:100%">
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                             <span  id="percent2">33</span>%
+                            </div>
+                        </div>
+                3. ''' + K + ''':<br><br>
+                        <div class="form-group row">
+                            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                <input type="range"  class="form-control-range"  id="slider3" name="rangeInput3" min="0" max="100" value=33.33
+                                onchange="updateTextInput3(this.value);">
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                             <span  id="percent3">33</span>%
+                            </div>
+                        </div>
 
-                <div class="slider two">
-                  <div class="slide">
-                     <div class="control">
-                       <div class="switch">
-                          <input type="number" class="value_in hidden" value="0" name="charity_two" min="0" max="100">
-                      </div>
-                      </div>
-                  </div>
-                  <br>
-
-                3. ''' + K + '''<br>
-
-                <div class="slider four">
-                <div class="slide">
-                    <div class="control">
-                    <div class="switch">
-                        <input type="number" class="value_in hidden" value="0" name="charity_four" min="0" max="100">
+                    <br>
+                <input type="submit" class='login_btn' value="Submit"  style="color:#ffffff; width:40%;  background: #88B2F0; display: inline-block;">
                     </div>
-                </div>
-                </div></div>
-                <br>
 
-
-                <input type="submit" value="Submit">
-                </div>
-
-
-                <br>
-                </p>
-                </div></div></div>
+                    </p>
+                    </div></div></div>
                 '''
 
         if float(c/n) > 0.5:
-            exit = ''' <br><br><br><br><br><br><br><br><br><br><br><br>
-              <input type="submit" name="action" value="jump">
-              <input type="submit" name="action" value="exit"> '''
+            exit = '''
+               <input type="submit" name="action" value="jump"  style="color:#ffffff; margin-left: 10px; width:20%; background: #88B2F0; display: inline-block;">
+              <input type="submit" name="action" value="exit"  style="color:#ffffff; width:20%; background: #88B2F0; display: inline-block;"> '''
         else:
             exit = ''
 
@@ -559,7 +575,6 @@ def preresults(request):
         ansd = [i for i in ansd if i != ['']]
         ansd = [i for i in ansd if i != ['jump']]
         ansd = [i for i in ansd if i != ['exit']]
-        print(ansd)
 
         tlist = []
         data = get_data()
@@ -619,10 +634,10 @@ def preresults(request):
         code = '<br><br><br>'
 
         for i in tp:
-            code = code + 'you have not answered ' + str(uns_p[str(i)]) + '% of section ' + str(str(i)) + '. Revisit? <input type="submit" name="act" value="'+str(str(i))+'"> <br>'
-        code = code + '<br><br><br><br><br><br><br>'
+            code = code + 'You have not answered ' + str(uns_p[str(i)]) + '% of section ' + str(str(i)) + '. Revisit? <input type="submit" class="login-btn"  name="act" style="color:#ffffff; width:50%; background: #88B2F0" value="Complete Section '+str(str(i))+'"> <br><br>'
+        code = code + '<br><br>'
 
-        cont = ''' Or continue? <input type="submit" name="continue" value="continue"> '''
+        cont = ''' Proceed to view results? <br> <input type="submit" style="color:#ffffff; width:50%; background: #88B2F0" class="login-btn" name="continue" value="View Results"> '''
 
         return render(request, 'home/preresults.html', {'V':int(res[0]), 'A':int(res[1]), 'K':int(res[2]), 'code':mark_safe(code), 'continue':mark_safe(cont)})
 
