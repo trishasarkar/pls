@@ -1,6 +1,9 @@
 # Preferred Learning Style Determination (Project by IBM)
 
 * This project was completed in 2 phases: Phase I by [Anirudh Ambati](https://github.com/anirudhambati), after which it was handed over to [Trisha Sarkar](https://github.com/trishasarkar) to complete Phase II
+
+### Purpose of Repo Creation
+* This repo was used during Phase I for storage and maintenance of the code base only. It was forked for continuing with Phase II.
 * My appends to the branch reflect my contribution. A more detailed account can be found in the repo - [IBM-Learning-Style-Determination](https://github.com/trishasarkar/IBM-Learning-Style-Determination).
 
 ## Documentation (from Phase I)
