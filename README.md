@@ -1,6 +1,9 @@
-# pls
+# Preferred Learning Style Determination (Project by IBM)
 
-### Documentation
+* This project was completed in 2 phases: Phase I by [Anirudh Ambati](https://github.com/anirudhambati), after which it was handed over to [Trisha Sarkar](https://github.com/trishasarkar) to complete Phase II
+* My appends to the branch reflect my contribution. A more detailed account can be found in the repo - [IBM-Learning-Style-Determination](https://github.com/trishasarkar/IBM-Learning-Style-Determination).
+
+## Documentation (from Phase I)
 
 1. home is the main app
 2. Static in the main repository has been used to gather static files while hosting
@@ -12,4 +15,3 @@
 8. quiz2 is the main loader for the quiz part. all questions and options are displayed from this view.
 9. by default this view stores the responses of previous question AND gets the session info of scenario.no and question.no and shows the next scenario/questions
 10. if there is some 'action' (jump section/exit), then it takes actions accordingly
-11.
